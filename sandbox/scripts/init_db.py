@@ -14,7 +14,9 @@ def init_db():
         created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         code TEXT NOT NULL,
         score REAL NOT NULL,
-        execution_time REAL NOT NULL
+        execution_time REAL NOT NULL,
+        dead BOOLEAN NOT NULL DEFAULT FALSE,
+        died_at DATETIME
     )
     """
     )

@@ -18,7 +18,10 @@ This guide helps you set up a simple, local code execution sandbox using Docker.
 
 2. Create a .env file in the sandbox directory with the following content:
 
-`OPENAI_API_KEY=your_openai_api_key`
+`
+OPENAI_API_KEY=your_openai_api_key
+GROQ_API_KEY=your_groq_api_key # Optional, but make sure none of the seed_db examples use groq.
+`
 
 3. Build the Docker image:
 
