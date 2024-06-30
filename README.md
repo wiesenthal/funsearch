@@ -1,8 +1,8 @@
 # funsearch
 
-# Local Code Execution Sandbox with SQLite Database
+My implementation of https://deepmind.google/discover/blog/funsearch-making-new-discoveries-in-mathematical-sciences-using-large-language-models/
 
-This guide helps you set up a simple, local code execution sandbox using Docker. The sandbox includes a SQLite database for simple data storage.
+## Local Code Execution Sandbox with SQLite Database
 
 ## Prerequisites
 
