@@ -28,19 +28,19 @@ This guide helps you set up a simple, local code execution sandbox using Docker.
 
 Run a container from the image:
 
-`docker run -it --rm -v $(pwd)/data:/data code-sandbox`
+`docker run -it --rm -v $(pwd)/data:/data -v $(pwd)/scripts:/sandbox/scripts code-sandbox`
 
 This command will:
 
 1. Initialize the SQLite database (if it doesn't exist)
-2. Start a Python interactive shell
+2. Mount the local `scripts` directory to `/sandbox/scripts` in the container
+3. Start a Python interactive shell
 
 The database will be stored in the `data` directory, which persists between container runs.
 
 ## Interacting with the Database
 
 In the Python shell, you can interact with the SQLite database:
-
 ```python
 import sqlite3
 
@@ -48,11 +48,12 @@ conn = sqlite3.connect('/data/example.db')
 cursor = conn.cursor()
 
 # Query the users table
-cursor.execute("SELECT * FROM users")
+cursor.execute("SELECT FROM users")
 print(cursor.fetchall())
 
 conn.close()
 ```
+
 
 ### Customizing Initialization
 
@@ -60,13 +61,18 @@ You can modify the init.sh script in the project directory to customize the star
 
 ### Maintenance
 
-Rebuild the Docker image when you change the Dockerfile, .env, requirements.txt, or init.sh:
+Rebuild the Docker image when you change the Dockerfile, requirements.txt, or init.sh:
 
 `docker build -t code-sandbox .`
 
-If you update .env after building, you don't need to rebuild. The .env file is mounted at runtime.
+If you update .env or scripts after building, you don't need to rebuild. These are mounted at runtime.
+
+### Updating Scripts
+
+The `scripts` directory is mounted as a volume, so any changes made to the local `scripts` directory will be immediately reflected in the container. You don't need to rebuild the image to update scripts.
 
 ### Note for Contributors
 
 - Do not commit your .env file to the repository if it contains sensitive information.
 - Update requirements.txt if you add new Python packages.
+

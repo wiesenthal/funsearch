@@ -2,33 +2,19 @@ import sqlite3
 
 
 def init_db():
-    conn = sqlite3.connect("/data/functions.db")
+    conn = sqlite3.connect("/data/programs.db")
     cursor = conn.cursor()
 
-    # Create the functions table
+    # Create the programs table
     cursor.execute(
         """
-    CREATE TABLE IF NOT EXISTS functions (
+    CREATE TABLE IF NOT EXISTS programs (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         island_id INTEGER NOT NULL,
-        timestamp_generated DATETIME NOT NULL,
-        status TEXT NOT NULL,
-        code TEXT NOT NULL
-    )
-    """
-    )
-
-    # Create the executions table
-    cursor.execute(
-        """
-    CREATE TABLE IF NOT EXISTS executions (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        function_id INTEGER NOT NULL,
-        start_time DATETIME NOT NULL,
-        end_time DATETIME NOT NULL,
-        score REAL,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
         code TEXT NOT NULL,
-        FOREIGN KEY (function_id) REFERENCES functions(id)
+        score REAL NOT NULL,
+        execution_time REAL NOT NULL
     )
     """
     )
@@ -37,11 +23,11 @@ def init_db():
     cursor.execute(
         """
     CREATE TABLE IF NOT EXISTS parent_ids (
-        function_id INTEGER,
+        program_id INTEGER,
         parent_id INTEGER,
-        FOREIGN KEY (function_id) REFERENCES functions(id),
-        FOREIGN KEY (parent_id) REFERENCES functions(id),
-        PRIMARY KEY (function_id, parent_id)
+        FOREIGN KEY (program_id) REFERENCES programs(id),
+        FOREIGN KEY (parent_id) REFERENCES programs(id),
+        PRIMARY KEY (program_id, parent_id)
     )
     """
     )
